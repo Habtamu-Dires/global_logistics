@@ -1,7 +1,7 @@
 --- app_user table
 CREATE TABLE app_user (
       id BIGSERIAL PRIMARY KEY,
-      external_id UUID NOT NULL UNIQUE,
+      public_id UUID NOT NULL UNIQUE,
 
       phone VARCHAR(20) NOT NULL UNIQUE,
       password_hash VARCHAR(255) NOT NULL,
@@ -21,8 +21,8 @@ CREATE TABLE app_user (
       remark TEXT
 );
 
-CREATE INDEX ix_user_external_id
-    ON app_user(external_id);
+CREATE INDEX ix_user_public_id
+    ON app_user(public_id);
 
 -- driver profile
 CREATE TABLE driver_profile (
@@ -53,7 +53,7 @@ CREATE TABLE consignor_profile (
 -- vehicle
 CREATE TABLE vehicle (
      id BIGSERIAL PRIMARY KEY,
-     external_id UUID NOT NULL UNIQUE,
+     public_id UUID NOT NULL UNIQUE,
 
      driver_id BIGINT NOT NULL,
 
@@ -73,7 +73,7 @@ CREATE TABLE vehicle (
 -- refresh_token
 CREATE TABLE refresh_token(
       id BIGSERIAL PRIMARY KEY,
-      user_external_id UUID NOT NULL,
+      user_public_id UUID NOT NULL,
 
       token_hash TEXT NOT NULL,
       issued_at TIMESTAMP NOT NULL,
@@ -85,7 +85,7 @@ CREATE UNIQUE INDEX ux_refresh_token_hash
     ON refresh_token(token_hash);
 
 CREATE INDEX ix_refresh_token_user
-    ON refresh_token(user_external_id);
+    ON refresh_token(user_public_id);
 
 --- otp_verification
 CREATE TABLE otp_verification (

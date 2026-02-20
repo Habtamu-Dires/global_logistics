@@ -2,20 +2,23 @@
 CREATE TABLE shipment (
       id BIGSERIAL PRIMARY KEY,
 
-      external_id UUID NOT NULL UNIQUE,
+      public_id UUID NOT NULL UNIQUE,
       consignor_id UUID NOT NULL,
 
       current_status VARCHAR(40) NOT NULL,
 
       price_amount NUMERIC(14,2) NOT NULL,
+      price_type VARCHAR(10) NOT NULL,
       price_currency VARCHAR(3) NOT NULL,
 
       good_type VARCHAR(100) NOT NULL,
+      quantity INT NOT NULL CHECK (quantity > 0),
       weight VARCHAR(50),
       volume VARCHAR(50),
 
       loading_location VARCHAR(255) NOT NULL,
       offloading_location VARCHAR(255) NOT NULL,
+      route VARCHAR(255),
 
       required_vehicle_type VARCHAR(50) NOT NULL,
       required_vehicle_number INT NOT NULL CHECK (required_vehicle_number > 0),
