@@ -1,8 +1,8 @@
 package com.yotor.global_logistics.identity.persistence;
 
-import com.yotor.global_logistics.identity.application.dto.VehicleSummery;
+import com.yotor.global_logistics.identity.application.vehicle.dto.VehicleSummery;
 import com.yotor.global_logistics.identity.domain.vehicle.Vehicle;
-import com.yotor.global_logistics.identity.vehicle.dto.VehicleProfileView;
+import com.yotor.global_logistics.identity.application.vehicle.dto.VehicleProfileView;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 

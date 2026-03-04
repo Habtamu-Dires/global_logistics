@@ -2,9 +2,10 @@ package com.yotor.global_logistics.shipment.domain;
 
 import com.yotor.global_logistics.exception.BusinessException;
 import com.yotor.global_logistics.exception.ErrorCode;
-import com.yotor.global_logistics.shipment.domain.dto.ShipmentStatus;
+import com.yotor.global_logistics.shipment.domain.enums.ShipmentStatus;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -53,6 +54,61 @@ public class Shipment {
 
     @MappedCollection(idColumn = "shipment_id")
     private Set<ShipmentStatusHistory> statusHistory = new HashSet<>();
+
+    /** Constructors */
+    @PersistenceCreator
+    private Shipment(
+            Long id,
+            UUID publicId,
+            UUID consignorId,
+            String currentStatus,
+
+            BigDecimal priceAmount,
+            String priceType,
+            String priceCurrency,
+
+            String goodType,
+            Integer quantity,
+            String weight,
+            String volume,
+
+            String loadingLocation,
+            String offloadingLocation,
+            String route,
+
+            String requiredVehicleType,
+            int requiredVehicleNumber,
+
+            LocalDateTime loadingDate,
+            LocalDateTime deliveryDate,
+
+            String details,
+
+           LocalDateTime createdAt,
+           LocalDateTime updatedAt
+    ){
+        this.id = id;
+        this.publicId = publicId;
+        this.consignorId = consignorId;
+        this.currentStatus = ShipmentStatus.valueOf(currentStatus);
+        this.priceAmount = priceAmount;
+        this.priceType = priceType;
+        this.priceCurrency = priceCurrency;
+        this.goodType = goodType;
+        this.quantity = quantity;
+        this.weight = weight;
+        this.volume = volume;
+        this.loadingLocation = loadingLocation;
+        this.offloadingLocation = offloadingLocation;
+        this.route = route;
+        this.requiredVehicleType = requiredVehicleType;
+        this.requiredVehicleNumber = requiredVehicleNumber;
+        this.loadingDate = loadingDate;
+        this.deliveryDate = deliveryDate;
+        this.details = details;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 
     private Shipment(
             UUID publicId,
@@ -316,19 +372,19 @@ public class Shipment {
     }
 
     // mark in progress
-    public void markInProgress(UUID systemActor) {
+    public void markInTransit(UUID systemActor) {
         if (currentStatus != ShipmentStatus.ADMIN_APPROVED
                 && currentStatus != ShipmentStatus.DRIVER_ASSIGNED
         ) {
             throw new BusinessException(ErrorCode.SHIPMENT_NOT_APPROVABLE);
         }
 
-        recordStatus(ShipmentStatus.IN_PROGRESS, systemActor, "Execution started");
+        recordStatus(ShipmentStatus.IN_TRANSIT, systemActor, "Execution started");
     }
 
     // mark completed
     public void markCompleted(UUID systemActor) {
-        if (currentStatus != ShipmentStatus.IN_PROGRESS) {
+        if (currentStatus != ShipmentStatus.IN_TRANSIT) {
             throw new BusinessException(ErrorCode.OPERATION_NOT_ALLOWED_IN_CURRENT_STATE);
         }
 
@@ -360,7 +416,7 @@ public class Shipment {
 
     //Negotiation helpers
     private void assertNegotiable() {
-        if (currentStatus == ShipmentStatus.IN_PROGRESS ||
+        if (currentStatus == ShipmentStatus.IN_TRANSIT ||
                 currentStatus == ShipmentStatus.COMPLETED ||
                 currentStatus == ShipmentStatus.CANCELLED_SYSTEM ||
                 currentStatus == ShipmentStatus.CANCELLED_BY_ADMIN ||

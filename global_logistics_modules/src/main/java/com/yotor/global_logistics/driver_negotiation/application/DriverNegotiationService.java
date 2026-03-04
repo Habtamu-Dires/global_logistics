@@ -6,10 +6,10 @@ import com.yotor.global_logistics.driver_negotiation.domain.dto.NegotiationStatu
 import com.yotor.global_logistics.driver_negotiation.persistence.DriverNegotiationRepository;
 import com.yotor.global_logistics.exception.BusinessException;
 import com.yotor.global_logistics.exception.ErrorCode;
-import com.yotor.global_logistics.identity.api.IdentityQueryService;
+import com.yotor.global_logistics.identity.port.IdentityQueryPort;
 import com.yotor.global_logistics.security.SecurityUtils;
-import com.yotor.global_logistics.shipment.api.ShipmentQueryPort;
-import com.yotor.global_logistics.shipment.application.dto.ShipmentResponse;
+import com.yotor.global_logistics.shipment.port.ShipmentQueryPort;
+import com.yotor.global_logistics.shipment.application.shipment.dto.ShipmentResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class DriverNegotiationService {
 
     private final DriverNegotiationRepository driverNegotiationRepo;
     private final ShipmentQueryPort shipmentQueryPort;
-    private final IdentityQueryService identityQueryService;
+    private final IdentityQueryPort identityQueryPort;
 
     @PreAuthorize("hasRole('ADMIN')")
     @Transactional
@@ -36,7 +36,7 @@ public class DriverNegotiationService {
         }
 
         for (UUID driverId : req.driverIds()) {
-            if (!identityQueryService.isDriverApproved(driverId)) {
+            if (!identityQueryPort.isDriverApproved(driverId)) {
                 throw new BusinessException(ErrorCode.DRIVER_NOT_APPROVED);
             }
 
@@ -65,7 +65,7 @@ public class DriverNegotiationService {
         }
 
         for (UUID driverId : req.driverIds()) {
-            if (!identityQueryService.isDriverApproved(driverId)) {
+            if (!identityQueryPort.isDriverApproved(driverId)) {
                 throw new BusinessException(ErrorCode.DRIVER_NOT_VERIFIED);
             }
 

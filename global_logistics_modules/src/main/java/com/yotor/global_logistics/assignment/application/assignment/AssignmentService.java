@@ -11,7 +11,7 @@ import com.yotor.global_logistics.assignment.persistence.AssignmentRepository;
 import com.yotor.global_logistics.exception.BusinessException;
 import com.yotor.global_logistics.exception.ErrorCode;
 import com.yotor.global_logistics.security.SecurityUtils;
-import com.yotor.global_logistics.shipment.api.ShipmentQueryPort;
+import com.yotor.global_logistics.shipment.port.ShipmentQueryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -96,7 +96,7 @@ public class AssignmentService {
     @Transactional
     public void confirmLoading(AssignmentRequest req){
         UUID actorId = SecurityUtils.currentUser().userPublicId();
-        String role = SecurityUtils.currentUser().role();
+        String role = SecurityUtils.currentUser().roles().stream().findFirst().orElse("");
         ShipmentAssignment assignment = assignmentRepo.findByPublicId(req.assignmentId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.ASSIGNMENT_NOT_FOUND));
 
@@ -109,7 +109,7 @@ public class AssignmentService {
     @Transactional
     public void startTransport(AssignmentRequest req){
         UUID actorId = SecurityUtils.currentUser().userPublicId();
-        String role = SecurityUtils.currentUser().role();
+        String role = SecurityUtils.currentUser().roles().stream().findFirst().orElse("");
         ShipmentAssignment assignment = assignmentRepo.findByPublicId(req.assignmentId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.ASSIGNMENT_NOT_FOUND));
 
@@ -117,14 +117,14 @@ public class AssignmentService {
 
         UUID shipmentId = assignment.getShipmentId();
 
-        boolean anyInProgress =
+        boolean anyInTransit =
                 assignmentRepo.existsByShipmentIdAndStatus(
                         shipmentId,
                         IN_TRANSIT
                 );
 
-        if (!anyInProgress && role.equals("ADMIN")) {
-            shipmentQueryPort.markInProgress(shipmentId, actorId);
+        if (!anyInTransit && role.equals("ADMIN")) {
+            shipmentQueryPort.markInTransit(shipmentId, actorId);
         }
 
         assignmentRepo.save(assignment);
@@ -133,7 +133,7 @@ public class AssignmentService {
     @PreAuthorize("hasRole('DRIVER')")
     public void confirmOffloading(AssignmentRequest req){
         UUID actorId = SecurityUtils.currentUser().userPublicId();
-        String role = SecurityUtils.currentUser().role();
+        String role = SecurityUtils.currentUser().roles().stream().findFirst().orElse("");
         ShipmentAssignment assignment = assignmentRepo.findByPublicId(req.assignmentId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.ASSIGNMENT_NOT_FOUND));
 
@@ -165,7 +165,7 @@ public class AssignmentService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.ASSIGNMENT_NOT_FOUND));
 
         UUID actorId = SecurityUtils.currentUser().userPublicId();
-        String role = SecurityUtils.currentUser().role();
+        String role = SecurityUtils.currentUser().roles().stream().findFirst().orElse("");
 
         assignment.cancel(actorId,ActorType.valueOf(role),req.remark());
         assignmentRepo.save(assignment);

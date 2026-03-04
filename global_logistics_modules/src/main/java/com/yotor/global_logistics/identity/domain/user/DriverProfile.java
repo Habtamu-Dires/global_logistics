@@ -16,7 +16,7 @@ public class DriverProfile {
 
     private String licenceNumber;
     private String licenceDocument;
-    private String region;
+    private String preferredLanes;
     private DriverStatus status;
 
     protected DriverProfile() {}
@@ -25,22 +25,46 @@ public class DriverProfile {
             Long userId,
             String licenceNumber,
             String licenceDocument,
-            String region
+            String preferredLanes
     ) {
         DriverProfile p = new DriverProfile();
         p.userId = userId;
         p.licenceNumber = licenceNumber;
         p.licenceDocument = licenceDocument;
-        p.region = region;
+        p.preferredLanes = preferredLanes;
         p.status = DriverStatus.PENDING;
         return p;
+    }
+
+    public void profileCreated(){
+        this.status = DriverStatus.PROFILE_CREATED;
+    }
+
+    public void markPending(){
+        this.status = DriverStatus.PENDING;
     }
 
     public void approve() {
         this.status = DriverStatus.APPROVED;
     }
 
+    public void activate() {
+        this.status = DriverStatus.ACTIVE;
+    }
+
+    public void assigned() {
+        this.status = DriverStatus.ASSIGNED;
+    }
+
+    public void offered(){
+        this.status = DriverStatus.OFFERED;
+    }
+
     public void suspend() {
         this.status = DriverStatus.SUSPENDED;
+    }
+
+    public void reject() {
+        this.status = DriverStatus.REJECTED;
     }
 }

@@ -5,8 +5,9 @@ CREATE TABLE app_user (
 
       phone VARCHAR(20) NOT NULL UNIQUE,
       password_hash VARCHAR(255) NOT NULL,
+      is_temp_password BOOLEAN NOT NULL DEFAULT FALSE,
 
-      role VARCHAR(20) NOT NULL,
+      roles VARCHAR(20)[] NOT NULL,
       status VARCHAR(20) NOT NULL,
 
       first_name VARCHAR(100),
@@ -16,8 +17,8 @@ CREATE TABLE app_user (
 
       phone_verified BOOLEAN NOT NULL DEFAULT FALSE,
 
-      created_at TIMESTAMP NOT NULL DEFAULT now(),
-      updated_at TIMESTAMP NOT NULL DEFAULT now(),
+      created_at TIMESTAMPTZ DEFAULT now(),
+      updated_at TIMESTAMPTZ DEFAULT now(),
       remark TEXT
 );
 
@@ -31,7 +32,7 @@ CREATE TABLE driver_profile (
 
     licence_number VARCHAR(100) NOT NULL,
     licence_document TEXT,
-    region VARCHAR(255),
+    preferred_lanes TEXT,
     status VARCHAR(20) NOT NULL,
 
     CONSTRAINT fk_driver_user
@@ -64,7 +65,7 @@ CREATE TABLE vehicle (
      details TEXT,
      photo TEXT,
 
-     created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT now(),
+     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
 
      CONSTRAINT fk_vehicle_driver
          FOREIGN KEY (driver_id) REFERENCES driver_profile(id)
@@ -76,8 +77,8 @@ CREATE TABLE refresh_token(
       user_public_id UUID NOT NULL,
 
       token_hash TEXT NOT NULL,
-      issued_at TIMESTAMP NOT NULL,
-      expires_at TIMESTAMP NOT NULL,
+      issued_at TIMESTAMPTZ NOT NULL,
+      expires_at TIMESTAMPTZ NOT NULL,
       revoked BOOLEAN NOT NULL DEFAULT FALSE
 );
 
@@ -93,8 +94,8 @@ CREATE TABLE otp_verification (
       phone VARCHAR(20) NOT NULL,
       code VARCHAR(20) NOT NULL,
       resend_count INT DEFAULT 0,
-      last_sent_at TIMESTAMP WITHOUT TIME ZONE,
-      expires_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+      last_sent_at TIMESTAMPTZ,
+      expires_at TIMESTAMPTZ NOT NULL,
       attempts INT NOT NULL,
       status VARCHAR(20) NOT NULL
 );
@@ -112,7 +113,7 @@ CREATE TABLE otp_rate_limit (
 
     violation_count INT NOT NULL DEFAULT 0,
 
-    blocked_until TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL
+    blocked_until TIMESTAMPTZ DEFAULT NULL
 );
 
 

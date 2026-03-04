@@ -1,6 +1,6 @@
 package com.yotor.global_logistics.shipment.domain;
 
-import com.yotor.global_logistics.shipment.domain.dto.ShipmentStatus;
+import com.yotor.global_logistics.shipment.domain.enums.ShipmentStatus;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -30,7 +30,6 @@ public class ShipmentStatusHistory {
         this.changedAt = changedAt;
     }
 
-    // getters
 }
 
 

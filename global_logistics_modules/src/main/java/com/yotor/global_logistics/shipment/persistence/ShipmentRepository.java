@@ -1,9 +1,11 @@
 package com.yotor.global_logistics.shipment.persistence;
 
-import com.yotor.global_logistics.shipment.application.dto.ShipmentIds;
-import com.yotor.global_logistics.shipment.application.dto.ShipmentOfferDto;
-import com.yotor.global_logistics.shipment.application.dto.ShipmentStatusHistoryDto;
+import com.yotor.global_logistics.shipment.application.shipment.dto.ShipmentIds;
+import com.yotor.global_logistics.shipment.application.offer.dto.ShipmentOfferDto;
+import com.yotor.global_logistics.shipment.application.history.dto.ShipmentStatusHistoryDto;
+import com.yotor.global_logistics.shipment.application.shipment.dto.ShipmentSummary;
 import com.yotor.global_logistics.shipment.domain.Shipment;
+import com.yotor.global_logistics.shipment.domain.enums.ShipmentStatus;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -41,8 +43,31 @@ public interface ShipmentRepository extends CrudRepository<Shipment,Long> {
             """)
     List<Shipment> findByConsignorId(UUID consignorId);
 
-    @Query("SELECT * FROM shipment")
-    List<Shipment> findAllShipments();
+    @Query("""
+            SELECT
+                public_id,
+                good_type,
+                loading_location,
+                offloading_location,
+                price_amount,
+                price_currency,
+                required_vehicle_type,
+                required_vehicle_number,
+                loading_date,
+                current_status,
+                created_at
+            FROM shipment 
+            WHERE current_status IN (:statuses)
+            ORDER BY created_at DESC
+            LIMIT :limit OFFSET :offset
+            """)
+    List<ShipmentSummary> findPageOfShipmentsByStatus(List<ShipmentStatus> statuses, long limit, long offset);
+
+    @Query("""
+            SELECT COUNT(*) FROM shipment
+            where current_status IN (:statuses)
+            """)
+    long countShipmentByStatus(List<ShipmentStatus> statuses);
 
     /** --- shipment status history queries ----- */
     @Query("""

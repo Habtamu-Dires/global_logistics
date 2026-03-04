@@ -2,7 +2,9 @@ package com.yotor.global_logistics.identity.domain.opt;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public record Otp(String value) {
+public record Otp(
+        String value
+) {
 
     public static Otp generate() {
         int code = ThreadLocalRandom.current().nextInt(100_000, 1_000_000);

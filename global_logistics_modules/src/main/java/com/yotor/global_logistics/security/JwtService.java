@@ -10,16 +10,14 @@ import org.springframework.stereotype.Service;
 
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.util.Date;
-import java.util.Map;
-import java.util.UUID;
-
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class JwtService {
 
     public static final String TOKEN_TYPE = "token_type";
-    public static final String ROLE = "role";
+    public static final String ROLES = "roles";
     private final PrivateKey privateKey;
     private final PublicKey publicKey;
     @Value("${app.security.jwt.access-token-expiration}")
@@ -32,10 +30,10 @@ public class JwtService {
         this.publicKey = KeyUtils.loadPublicKey("keys/local-only/public_key.pem");
     }
 
-    public String generateAccessToken(final UUID userPublicId, final String role) {
+    public String generateAccessToken(final UUID userPublicId, final Set<String> roles) {
         final Map<String, Object> claims = Map.of(
                 TOKEN_TYPE, "ACCESS_TOKEN",
-                "role", role
+                "roles", roles
         );
         return buildToken(userPublicId, claims, this.accessTokenExpiration);
     }
@@ -65,8 +63,14 @@ public class JwtService {
         return UUID.fromString(extractClaims(token).getSubject());
     }
 
-    public String extractRole(String token) {
-        return extractClaims(token).get(ROLE, String.class);
+    public Set<String> extractRoles(String token) {
+        List<?> raw = extractClaims(token).get(ROLES, List.class);
+
+        if (raw == null) return Set.of();
+
+        return raw.stream()
+                .map(Object::toString)
+                .collect(Collectors.toSet());
     }
 
     private boolean isTokenExpired(final String token) {

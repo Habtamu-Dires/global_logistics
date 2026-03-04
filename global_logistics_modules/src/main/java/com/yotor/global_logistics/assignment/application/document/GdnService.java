@@ -7,12 +7,12 @@ import com.yotor.global_logistics.assignment.domain.document.Gdn;
 import com.yotor.global_logistics.assignment.domain.document.dto.AssignmentSnapshot;
 import com.yotor.global_logistics.assignment.persistence.AssignmentRepository;
 import com.yotor.global_logistics.assignment.persistence.GdnRepository;
-import com.yotor.global_logistics.identity.api.IdentityQueryService;
-import com.yotor.global_logistics.identity.application.dto.UserSummary;
-import com.yotor.global_logistics.identity.application.dto.VehicleSummery;
+import com.yotor.global_logistics.identity.port.IdentityQueryPort;
+import com.yotor.global_logistics.identity.application.identity.dto.UserProfile;
+import com.yotor.global_logistics.identity.application.vehicle.dto.VehicleSummery;
 import com.yotor.global_logistics.security.SecurityUtils;
-import com.yotor.global_logistics.shipment.api.ShipmentQueryPort;
-import com.yotor.global_logistics.shipment.application.dto.ShipmentResponse;
+import com.yotor.global_logistics.shipment.port.ShipmentQueryPort;
+import com.yotor.global_logistics.shipment.application.shipment.dto.ShipmentResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class GdnService {
     private final AssignmentRepository assignmentRepository;
     private final GdnRepository gdnRepository;
     private final ShipmentQueryPort shipmentQueryPort;
-    private final IdentityQueryService identityQueryService;
+    private final IdentityQueryPort identityQueryPort;
 
     @PreAuthorize("hasRole('ADMIN')")
     @Transactional
@@ -63,14 +63,14 @@ public class GdnService {
 
     private AssignmentSnapshot snapshotBuilder(ShipmentAssignment assignment){
         ShipmentResponse shipment = shipmentQueryPort.getShipmentDetails(assignment.getShipmentId());
-        UserSummary consignor = identityQueryService.getUserSummary(shipment.consignorId());
-        UserSummary driver = identityQueryService.getUserSummary(assignment.getDriverId());
-        VehicleSummery vehicleSummery = identityQueryService.getVehicleSummery(driver.publicId());
+        UserProfile consignor = identityQueryPort.getUserSummary(shipment.consignorId());
+        UserProfile driver = identityQueryPort.getUserSummary(assignment.getDriverId());
+        VehicleSummery vehicleSummery = identityQueryPort.getVehicleSummery(driver.publicId());
 
         return AssignmentSnapshot.builder()
-                .consignorName(consignor.fullName())
+                .consignorName(consignor.firstName() + " " + consignor.lastName())
                 .consignorPhone(consignor.phone())
-                .driverName(driver.fullName())
+                .driverName(driver.firstName() + " " + driver.lastName())
                 .driverPhone(driver.phone())
                 .vehicleType(vehicleSummery.type())
                 .vehiclePlateNo(vehicleSummery.plateNumber())

@@ -8,6 +8,7 @@ import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,10 +20,10 @@ public class OtpVerification {
     private  String phone;
 
     private String code;
-    private LocalDateTime expiresAt;
+    private Instant expiresAt;
 
     private int resendCount;
-    private LocalDateTime lastSentAt;
+    private Instant lastSentAt;
 
     private int attempts;
 
@@ -30,19 +31,15 @@ public class OtpVerification {
 
     private static final int MAX_ATTEMPTS = 5;
 
-    private OtpVerification(){
-
-    }
-
-    /*--- Domain rules --- */
+    // constructors
     @PersistenceCreator
     private OtpVerification(
             Long id,
             String phone,
             String code,
-            LocalDateTime expiresAt,
+            Instant expiresAt,
             Integer resendCount,
-            LocalDateTime lastSentAt,
+            Instant lastSentAt,
             int attempts,
             OtpStatus status
 
@@ -59,14 +56,14 @@ public class OtpVerification {
 
     private OtpVerification(
             String phoneNumber,
-            String code,
-            LocalDateTime expiresAt
+            String code
     ) {
         this.phone = phoneNumber;
         this.code = code;
-        this.expiresAt = expiresAt;
+        this.expiresAt = Instant.now().plusSeconds(300);
         this.attempts = 0;
         this.status = OtpStatus.ACTIVE;
+        this.lastSentAt = Instant.now();
     }
 
     //factory method
@@ -76,8 +73,7 @@ public class OtpVerification {
     ) {
         return new OtpVerification(
                 phoneNumber,
-                code,
-                LocalDateTime.now().plus(Duration.ofMinutes(3))
+                code
         );
     }
 
@@ -87,7 +83,7 @@ public class OtpVerification {
             throw new BusinessException(ErrorCode.OTP_ALREADY_VERIFIED);
         }
 
-        if (LocalDateTime.now().isAfter(expiresAt)) {
+        if (Instant.now().isAfter(expiresAt)) {
             throw new BusinessException(ErrorCode.OTP_EXPIRED);
         }
 
@@ -111,16 +107,20 @@ public class OtpVerification {
         }
 
         if (resendCount >= 3) {
-            throw new BusinessException(ErrorCode.OTP_RESEND_LIMIT_REACHED);
+            if(Duration.between(lastSentAt, Instant.now()).getSeconds() > 300){
+                this.resendCount = 0;
+            } else{
+                throw new BusinessException(ErrorCode.OTP_RESEND_LIMIT_REACHED);
+            }
         }
 
-        if (Duration.between(lastSentAt, LocalDateTime.now()).getSeconds() < 60) {
+        if (Duration.between(lastSentAt, Instant.now()).getSeconds() < 60) {
             throw new BusinessException(ErrorCode.OTP_RESEND_TOO_SOON);
         }
 
         this.code = Otp.generate().value();
-        this.expiresAt = LocalDateTime.now().plusMinutes(5);
-        this.lastSentAt = LocalDateTime.now();
+        this.expiresAt = Instant.now().plus(Duration.ofMinutes(5));
+        this.lastSentAt = Instant.now();
         this.resendCount++;
     }
 

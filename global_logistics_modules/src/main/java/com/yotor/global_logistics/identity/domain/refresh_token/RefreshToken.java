@@ -11,6 +11,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
+@Getter
 @Table("refresh_token")
 public class RefreshToken {
 
@@ -94,11 +95,11 @@ public class RefreshToken {
         // revoke current token
         this.withRevoked();
 
-        // issue new token with SAME issuedAt
+        // issue new token
         return new RefreshToken(
                 this.userPublicId,
                 newTokenHash,
-                this.issuedAt,
+                Instant.now().plus(ABSOLUTE_MAX_LIFETIME), // this.issuedAt,
                 Instant.now().plus(ROTATION_TTL),
                 false
         );

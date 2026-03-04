@@ -12,25 +12,28 @@ CREATE TABLE shipment (
       price_currency VARCHAR(3) NOT NULL,
 
       good_type VARCHAR(100) NOT NULL,
-      quantity INT NOT NULL CHECK (quantity > 0),
+      quantity INT NOT NULL CHECK ( quantity > 0 ),
       weight VARCHAR(50),
       volume VARCHAR(50),
 
       loading_location VARCHAR(255) NOT NULL,
       offloading_location VARCHAR(255) NOT NULL,
-      route VARCHAR(255),
+      route VARCHAR(255) NOT NULL ,
 
       required_vehicle_type VARCHAR(50) NOT NULL,
-      required_vehicle_number INT NOT NULL CHECK (required_vehicle_number > 0),
+      required_vehicle_number INT NOT NULL CHECK ( quantity > 0),
 
-      loading_date TIMESTAMP NOT NULL,
-      delivery_date TIMESTAMP NOT NULL,
+      loading_date TIMESTAMP,
+      delivery_date TIMESTAMP,
 
       details TEXT,
 
       created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
       updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );
+
+CREATE INDEX idx_shipment_status ON shipment(current_status, created_at DESC);
+CREATE INDEX idx_shipment_publicId ON shipment(public_id);
 
 --shipment offer
 CREATE TABLE shipment_offer (
@@ -54,6 +57,7 @@ CREATE TABLE shipment_offer (
 
         UNIQUE (shipment_id, round)
 );
+CREATE INDEX idx_shipment_offer_shipment_id ON shipment_offer(shipment_id);
 
 --- shipment status table
 CREATE TABLE shipment_status_history (
@@ -66,3 +70,5 @@ CREATE TABLE shipment_status_history (
      reason TEXT,
      changed_at TIMESTAMP NOT NULL
 );
+
+CREATE INDEX idx_shipment_status_history_shipment_id ON shipment_status_history(shipment_id);

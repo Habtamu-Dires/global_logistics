@@ -8,7 +8,8 @@ import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -22,8 +23,9 @@ public class UserIdentity {
 
     private String phone;
     private String passwordHash;
+    private boolean isTempPassword;
 
-    private UserRole role;
+    private Set<UserRole> roles;
 
     private UserStatus status;
 
@@ -34,8 +36,8 @@ public class UserIdentity {
 
     private boolean phoneVerified;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private Instant createdAt;
+    private Instant updatedAt;
 
     private String remark;
 
@@ -50,7 +52,7 @@ public class UserIdentity {
             String firstName,
             String lastName,
             String phone,
-            UserRole role,
+            Set<UserRole> roles,
             String passwordHash
     ) {
         UserIdentity user = new UserIdentity();
@@ -58,19 +60,35 @@ public class UserIdentity {
         user.firstName = firstName;
         user.lastName = lastName;
         user.phone = phone;
-        user.role = role;
+        user.roles = roles;
         user.passwordHash = passwordHash;
+        user.isTempPassword = false;
         user.status = UserStatus.OTP_SENT;
-        user.createdAt = LocalDateTime.now();
-        user.updatedAt = LocalDateTime.now();
+        user.createdAt = Instant.now();
+        user.updatedAt = Instant.now();
 
         return user;
     }
 
-
+    // update
+    public void update(
+            String nationalId,
+            String profilePic,
+            String firstName,
+            String lastName,
+            String phone
+    ) {
+        this.nationalId = nationalId;
+        this.profilePic = profilePic;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.updatedAt = Instant.now();
+    }
 
     public void verifyPhoneNumber(){
         this.phoneVerified = true;
+        this.markVerified();
     }
 
     public void addProfilePic(String profile_pic){this.profilePic = profile_pic;}
@@ -78,30 +96,68 @@ public class UserIdentity {
 
     public void markVerified(){
         this.status = UserStatus.VERIFIED;
+        this.updatedAt = Instant.now();
+    }
+
+    public void markPending(){
+        this.status = UserStatus.PENDING;
+        this.updatedAt = Instant.now();
     }
 
     public void approve() {
-        if (this.status != UserStatus.VERIFIED) {
+        if (this.status != UserStatus.PENDING
+                && this.status != UserStatus.VERIFIED
+                && this.status != UserStatus.REJECTED
+                && this.status != UserStatus.SUSPENDED
+        ) {
             throw new BusinessException(ErrorCode.PHONE_NOT_VERIFIED);
         }
         this.status = UserStatus.APPROVED;
+        this.updatedAt = Instant.now();
     }
 
     public void reject(String remark) {
         this.status = UserStatus.REJECTED;
+        this.updatedAt = Instant.now();
         this.remark = remark;
     }
 
-    public void addRemark(String remark){
+    public void suspend(String remark){
+        this.status = UserStatus.SUSPENDED;
+        this.updatedAt = Instant.now();
         this.remark = remark;
     }
+
+   public void disable(String remark){
+        this.status = UserStatus.DISABLED;
+        this.updatedAt = Instant.now();
+        this.remark = remark;
+   }
+
+   public void activate(){
+        this.status = UserStatus.ACTIVE;
+        this.updatedAt = Instant.now();
+        this.remark = "";
+   }
 
     public boolean isDriver() {
-        return this.role == UserRole.DRIVER;
+        return this.roles.contains(UserRole.DRIVER);
     }
 
     public boolean isConsignor() {
-        return this.role == UserRole.CONSIGNOR;
+        return this.roles.contains(UserRole.CONSIGNOR);
     }
 
+    public void changePassword(String newHash) {
+        this.passwordHash = newHash;
+        this.updatedAt = Instant.now();
+    }
+    public void addRemark(String remark) {
+        this.remark = remark;
+        this.updatedAt = Instant.now();
+    }
+
+
+    public void setPasswordAsTemp() {this.isTempPassword = true;}
+    public void setPasswordAsNotTemp() {this.isTempPassword = false;}
 }

@@ -3,6 +3,8 @@ package com.yotor.global_logistics.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -24,13 +26,15 @@ public class SecurityConfig {
 
         http
             .csrf(AbstractHttpConfigurer::disable)
+            .cors(Customizer.withDefaults())
             .sessionManagement(sm ->
                     sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(auth -> auth
+                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .requestMatchers("/auth/**").permitAll()
                     .requestMatchers(
-                        "/v2/api-docs",
+                            "/v2/api-docs",
                             "/v3/api-docs",
                             "/v3/api-docs/**",
                             "/swagger-resources",
@@ -39,11 +43,10 @@ public class SecurityConfig {
                             "/configuration/security",
                             "/swagger-ui/**",
                             "/webjars/**",
-                            "/swagger-ui.html",
-                            "/",
-                            "/index.html"
+                            "/swagger-ui.html"
                     ).permitAll()
                     .requestMatchers("/admin/**").hasRole("ADMIN")
+                    .requestMatchers("/super-admin/**").hasRole("SUPER_ADMIN")
                     .anyRequest().authenticated()
             )
             .addFilterBefore(this.jwtFilter, UsernamePasswordAuthenticationFilter.class)

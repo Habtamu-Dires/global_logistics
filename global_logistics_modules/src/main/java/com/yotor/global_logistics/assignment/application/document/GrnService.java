@@ -18,6 +18,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -34,7 +35,7 @@ public class GrnService {
     @Transactional
     public UUID generateGrn(UUID assignmentPublicId, CreateGrnRequest req){
         UUID actorId = SecurityUtils.currentUser().userPublicId();
-        String role = SecurityUtils.currentUser().role();
+        List<String> roles = SecurityUtils.currentUser().roles().stream().toList();
         ShipmentAssignment assignment =
                 assignmentRepo.findByPublicId(assignmentPublicId)
                         .orElseThrow();
@@ -55,7 +56,7 @@ public class GrnService {
         );
 
         grnRepo.save(grn);
-        assignment.markGrnGenerated(actorId, ActorType.valueOf(role));
+        assignment.markGrnGenerated(actorId, ActorType.valueOf(roles.getFirst()));
         assignmentFinancePort.createFinanceForAssignment(
                 assignmentPublicId,
                 assignment.getAgreedPrice()

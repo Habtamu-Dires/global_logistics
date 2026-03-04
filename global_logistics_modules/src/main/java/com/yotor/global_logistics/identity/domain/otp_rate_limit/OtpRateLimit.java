@@ -1,17 +1,17 @@
 package com.yotor.global_logistics.identity.domain.otp_rate_limit;
 
+import com.yotor.global_logistics.common.TimeFormatUtil;
 import com.yotor.global_logistics.exception.BusinessException;
 import lombok.Builder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.*;
 
 import static com.yotor.global_logistics.exception.ErrorCode.OTP_BLOCKED;
 
-@Builder
+
 @Table("otp_rate_limit")
 public class OtpRateLimit {
 
@@ -24,11 +24,9 @@ public class OtpRateLimit {
 
     private int violationCount;      // escalations
 
-    private LocalDateTime blockedUntil;
+    private Instant blockedUntil;
 
-    public OtpRateLimit(){
-
-    }
+    public OtpRateLimit(){}
 
     /* ---------- Domain rules ---------- */
     @PersistenceCreator
@@ -38,7 +36,7 @@ public class OtpRateLimit {
             LocalDate windowStart,
             int sentCount,
             int violationCount,
-            LocalDateTime blockedUntil
+            Instant blockedUntil
     ){
         this.id = id;
         this.phone = phone;
@@ -49,24 +47,27 @@ public class OtpRateLimit {
     }
 
     public static OtpRateLimit create(String phone) {
-
-        return OtpRateLimit.builder()
-                .phone(phone)
-                .sentCount(1)
-                .violationCount(0)
-                .build();
+        OtpRateLimit limit = new OtpRateLimit();
+        limit.phone = phone;
+        limit.windowStart = LocalDate.now();
+        limit.violationCount = 0;
+        limit.blockedUntil = null;
+        limit.sentCount = 1;
+        return limit;
     }
 
-    public void checkAllowed(LocalDateTime now) {
+    public void checkAllowed(Instant now) {
         if (blockedUntil != null && now.isBefore(blockedUntil)) {
+            String blockedTime =
+                    TimeFormatUtil.formatToMinute(blockedUntil);
             throw new BusinessException(
                     OTP_BLOCKED,
-                    blockedUntil
+                    blockedTime
             );
         }
     }
 
-    public void recordSend(LocalDateTime now) {
+    public void recordSend(Instant now) {
         resetWindowIfNeeded(now);
 
         sentCount++;
@@ -76,20 +77,22 @@ public class OtpRateLimit {
         }
     }
 
-    private void resetWindowIfNeeded(LocalDateTime now) {
-        LocalDate today = now.toLocalDate();
+    private void resetWindowIfNeeded(Instant now) {
+        ZoneId zoneId = TimeFormatUtil.zoneId;
+        LocalDate today = now.atZone(zoneId).toLocalDate();
         if (!today.equals(windowStart)) {
             windowStart = today;
             sentCount = 1;
         }
     }
 
-    private void escalateBlock(LocalDateTime now) {
+    private void escalateBlock(Instant now) {
         violationCount++;
 
         long blockDays = calculateBlockDays(violationCount);
 
-        blockedUntil = now.plusDays(blockDays);
+//        blockedUntil = now.plusDays(blockDays);
+        blockedUntil = now.plus(Duration.ofDays(blockDays));
         sentCount = 0;
     }
 

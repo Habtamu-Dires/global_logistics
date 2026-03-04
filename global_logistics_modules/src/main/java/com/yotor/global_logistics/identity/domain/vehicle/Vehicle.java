@@ -27,7 +27,7 @@ public class Vehicle {
 
     private final LocalDateTime createdAt;
 
-
+   // constructors
     @PersistenceCreator
     public Vehicle(
             Long id,

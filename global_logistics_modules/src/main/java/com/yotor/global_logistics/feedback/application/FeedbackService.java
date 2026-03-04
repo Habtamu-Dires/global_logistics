@@ -9,11 +9,12 @@ import com.yotor.global_logistics.feedback.domain.FeedbackActorType;
 import com.yotor.global_logistics.feedback.domain.FeedbackTargetType;
 import com.yotor.global_logistics.feedback.persistence.FeedbackRepository;
 import com.yotor.global_logistics.security.SecurityUtils;
-import com.yotor.global_logistics.shipment.api.ShipmentQueryPort;
+import com.yotor.global_logistics.shipment.port.ShipmentQueryPort;
 import io.swagger.v3.oas.annotations.servers.Server;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Server
@@ -89,8 +90,9 @@ public class FeedbackService {
     public UUID givePlatformFeedback(CreateFeedbackRequest req) {
 
         UUID actorId = SecurityUtils.currentUser().userPublicId();
+        List<String> roles = SecurityUtils.currentUser().roles().stream().toList();
         FeedbackActorType actorType =
-                FeedbackActorType.valueOf(SecurityUtils.currentUser().role());
+                FeedbackActorType.valueOf(roles.getFirst());
 
         validateAssignmentCompleted(req.assignmentId());
 

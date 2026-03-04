@@ -13,16 +13,25 @@ public interface OtpVerificationRepository extends CrudRepository<OtpVerificatio
             FROM otp_verification
             WHERE phone = :phone
               AND status = 'ACTIVE'
-              AND expires_at > now()
-            LIMIT 1;
+            LIMIT 1
             """)
     Optional<OtpVerification> findActiveByPhone(String phone);
 
     @Query("""
+            SELECT *
+            FROM otp_verification
+            WHERE phone = :phone
+              AND status = 'ACTIVE'
+              AND expires_at > now()
+            LIMIT 1
+            """)
+    Optional<OtpVerification> findCurrentByPhone(String phone);
+
+    @Query("""
             DELETE FROM otp_verification otp
             WHERE otp.otp_status = 'VERIFIED'
-            and otp.expires_at < now()
+            OR otp.expires_at < now()
             """)
-    void deleteVerifiedAndExpiredOtps();
+    void deleteVerifiedOrExpiredOtps();
 
 }

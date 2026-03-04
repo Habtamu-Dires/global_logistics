@@ -9,7 +9,7 @@ spring:
     virtual:
       enabled: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/gl_db3
+    url: jdbc:postgresql://localhost:5432/gl_db2
     username: hab
     password: password
     driver-class-name: org.postgresql.Driver
@@ -26,9 +26,19 @@ spring.modulith:
   verification:
     enabled: true
 
+# open api swagger produce json
+springdoc:
+  default-produces-media-type: application/json
+
 # these properties need to be well organized across the different ENV
 app:
   security:
     jwt:
-      access-token-expiration: 604800000 #900000 # 15 minutes
+      access-token-expiration: 90000 # 1.5 minutes
       refresh-token-expiration: 604800000 # 7 days
+  cors:
+    origins: ${ALLOWED_ORIGINS:http://some.com,http://localhost:4200}
+  file-storage:
+    path: ${FILE_PATH:./uploadedFiles}
+  server:
+    url: ${SERVER_URL:http://localhost:8088/api}

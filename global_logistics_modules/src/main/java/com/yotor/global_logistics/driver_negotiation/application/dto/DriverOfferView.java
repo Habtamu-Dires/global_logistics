@@ -1,7 +1,7 @@
 package com.yotor.global_logistics.driver_negotiation.application.dto;
 
 import com.yotor.global_logistics.driver_negotiation.domain.DriverNegotiation;
-import com.yotor.global_logistics.shipment.application.dto.ShipmentResponse;
+import com.yotor.global_logistics.shipment.application.shipment.dto.ShipmentResponse;
 import lombok.Builder;
 
 import java.math.BigDecimal;

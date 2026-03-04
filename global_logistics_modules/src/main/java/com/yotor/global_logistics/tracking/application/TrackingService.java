@@ -6,7 +6,7 @@ import com.yotor.global_logistics.exception.BusinessException;
 import com.yotor.global_logistics.exception.ErrorCode;
 import com.yotor.global_logistics.identity.domain.user.enums.UserRole;
 import com.yotor.global_logistics.security.SecurityUtils;
-import com.yotor.global_logistics.shipment.api.ShipmentQueryPort;
+import com.yotor.global_logistics.shipment.port.ShipmentQueryPort;
 import com.yotor.global_logistics.tracking.application.dto.TrackingRecordRequest;
 import com.yotor.global_logistics.tracking.application.dto.TrackingResponse;
 import com.yotor.global_logistics.tracking.entity.Tracking;
@@ -86,7 +86,7 @@ public class TrackingService {
     @Transactional(readOnly = true)
     public TrackingResponse getLatest(UUID assignmentId) {
 
-        String role = SecurityUtils.currentUser().role();
+        String role = SecurityUtils.currentUser().roles().stream().findFirst().orElse("");
 
         if(role.equals(UserRole.CONSIGNOR.name())){
             UUID shipmentId = assignmentQueryPort.getShipmentId(assignmentId);
@@ -109,7 +109,7 @@ public class TrackingService {
     @Transactional(readOnly = true)
     public List<TrackingResponse> getRoute(UUID assignmentId) {
 
-         String role = SecurityUtils.currentUser().role();
+         String role = SecurityUtils.currentUser().roles().stream().findFirst().orElse("");
         if(role.equals(UserRole.CONSIGNOR.name())){
             UUID shipmentId = assignmentQueryPort.getShipmentId(assignmentId);
             UUID shipmentConsignorId = shipmentQueryPort.getConsignorId(shipmentId);
