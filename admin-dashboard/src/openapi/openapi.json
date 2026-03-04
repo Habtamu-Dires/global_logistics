@@ -1,0 +1,3913 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "OpenAPI definition",
+        "version": "v0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8088/api",
+            "description": "Generated server url"
+        }
+    ],
+    "paths": {
+        "/vehicles/suspend/{vehicle-id}": {
+            "put": {
+                "tags": [
+                    "vehicles"
+                ],
+                "operationId": "suspendVehicle",
+                "parameters": [
+                    {
+                        "name": "vehicle-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/vehicles/reject/{vehicle-id}": {
+            "put": {
+                "tags": [
+                    "vehicles"
+                ],
+                "operationId": "rejectVehicle",
+                "parameters": [
+                    {
+                        "name": "vehicle-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/vehicles/approve/{vehicle-id}": {
+            "put": {
+                "tags": [
+                    "vehicles"
+                ],
+                "operationId": "approveVehicle",
+                "parameters": [
+                    {
+                        "name": "vehicle-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/identity": {
+            "get": {
+                "tags": [
+                    "identity"
+                ],
+                "operationId": "getUserProfile",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserProfile"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "identity"
+                ],
+                "operationId": "updateUserProfile",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserProfile"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserProfile"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/identity/verify-phone/{public-id}": {
+            "put": {
+                "tags": [
+                    "identity"
+                ],
+                "operationId": "verifyPhone",
+                "parameters": [
+                    {
+                        "name": "public-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/identity/reject-user/{public-id}": {
+            "put": {
+                "tags": [
+                    "identity"
+                ],
+                "operationId": "rejectUser",
+                "parameters": [
+                    {
+                        "name": "public-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/identity/disable/{public-id}": {
+            "put": {
+                "tags": [
+                    "identity"
+                ],
+                "operationId": "disableUser",
+                "parameters": [
+                    {
+                        "name": "public-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TextDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/identity/add-remark/{public-id}": {
+            "put": {
+                "tags": [
+                    "identity"
+                ],
+                "operationId": "addUserRemark",
+                "parameters": [
+                    {
+                        "name": "public-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TextDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/identity/activate/{public-id}": {
+            "put": {
+                "tags": [
+                    "identity"
+                ],
+                "operationId": "activateUser",
+                "parameters": [
+                    {
+                        "name": "public-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/drivers/suspend/{public-id}": {
+            "put": {
+                "tags": [
+                    "drivers"
+                ],
+                "operationId": "suspendDriver",
+                "parameters": [
+                    {
+                        "name": "public-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TextDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/drivers/reject/{public-id}": {
+            "put": {
+                "tags": [
+                    "drivers"
+                ],
+                "operationId": "rejectDriverProfile",
+                "parameters": [
+                    {
+                        "name": "public-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TextDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/drivers/approve/{public-id}": {
+            "put": {
+                "tags": [
+                    "drivers"
+                ],
+                "operationId": "approveDriverProfile",
+                "parameters": [
+                    {
+                        "name": "public-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/drivers/activate/{public-id}": {
+            "put": {
+                "tags": [
+                    "drivers"
+                ],
+                "operationId": "activateDriver",
+                "parameters": [
+                    {
+                        "name": "public-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/driver-negotiations/driver-rejects": {
+            "put": {
+                "tags": [
+                    "driver-negotiations"
+                ],
+                "operationId": "driverRejects",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RejectOrCancelRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/driver-negotiations/driver-cancel": {
+            "put": {
+                "tags": [
+                    "driver-negotiations"
+                ],
+                "operationId": "driverCancel",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RejectOrCancelRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/driver-negotiations/driver-accepts": {
+            "put": {
+                "tags": [
+                    "driver-negotiations"
+                ],
+                "operationId": "driverAccepts",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DriverAcceptRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/driver-negotiations/admin-cancel": {
+            "put": {
+                "tags": [
+                    "driver-negotiations"
+                ],
+                "operationId": "adminCancel",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RejectOrCancelRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/consignors/suspend/{public-id}": {
+            "put": {
+                "tags": [
+                    "consignors"
+                ],
+                "operationId": "suspendConsignorProfile",
+                "parameters": [
+                    {
+                        "name": "public-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TextDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/consignors/reject/{public-id}": {
+            "put": {
+                "tags": [
+                    "consignors"
+                ],
+                "operationId": "rejectConsignorProfile",
+                "parameters": [
+                    {
+                        "name": "public-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TextDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/consignors/approve/{public-id}": {
+            "put": {
+                "tags": [
+                    "consignors"
+                ],
+                "operationId": "approveConsignorProfile",
+                "parameters": [
+                    {
+                        "name": "public-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/consignors/activate/{public-id}": {
+            "put": {
+                "tags": [
+                    "consignors"
+                ],
+                "operationId": "activateConsignorProfile",
+                "parameters": [
+                    {
+                        "name": "public-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/assignments/start-trasnsport": {
+            "put": {
+                "tags": [
+                    "assignments"
+                ],
+                "operationId": "startTransport",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssignmentRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/assignments/driver-complete": {
+            "put": {
+                "tags": [
+                    "assignments"
+                ],
+                "operationId": "confirmOffloading",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssignmentRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/assignments/confirm-receipt-by-consignor": {
+            "put": {
+                "tags": [
+                    "assignments"
+                ],
+                "operationId": "confirmReceiptByConsignor",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssignmentRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/assignments/confirm-loading": {
+            "put": {
+                "tags": [
+                    "assignments"
+                ],
+                "operationId": "confirmLoading",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssignmentRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/assignments/cancel": {
+            "put": {
+                "tags": [
+                    "assignments"
+                ],
+                "operationId": "driverCancel_1",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssignmentRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/vehicles/create": {
+            "post": {
+                "tags": [
+                    "vehicles"
+                ],
+                "operationId": "createVehicle",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateVehicleRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tracking": {
+            "post": {
+                "tags": [
+                    "tracking"
+                ],
+                "operationId": "recordLocation",
+                "parameters": [
+                    {
+                        "name": "req",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/TrackingRecordRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shipments/create": {
+            "post": {
+                "tags": [
+                    "shipments"
+                ],
+                "operationId": "createShipment",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateShipmentRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shipments/consignor-reject-offer": {
+            "post": {
+                "tags": [
+                    "shipments"
+                ],
+                "operationId": "consignorRejects",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConsignorRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shipments/consignor-counter-offer": {
+            "post": {
+                "tags": [
+                    "shipments"
+                ],
+                "operationId": "consignorCounter",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConsignorCounterReq"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shipments/consignor-cancel": {
+            "post": {
+                "tags": [
+                    "shipments"
+                ],
+                "operationId": "consignorCancel",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConsignorRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shipments/consignor-accept-offer": {
+            "post": {
+                "tags": [
+                    "shipments"
+                ],
+                "operationId": "consignorAccepts",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConsignorRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shipments/admin-request-change": {
+            "post": {
+                "tags": [
+                    "shipments"
+                ],
+                "operationId": "adminRequestChange",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AdminRequestChange"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shipments/admin-rejects": {
+            "post": {
+                "tags": [
+                    "shipments"
+                ],
+                "operationId": "adminRejects",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AdminRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shipments/admin-cancel": {
+            "post": {
+                "tags": [
+                    "shipments"
+                ],
+                "operationId": "adminCancel_1",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AdminRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shipments/admin-approve": {
+            "post": {
+                "tags": [
+                    "shipments"
+                ],
+                "operationId": "adminApprove",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AdminRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/notifications/{id}/read": {
+            "post": {
+                "tags": [
+                    "notifications"
+                ],
+                "operationId": "markAsRead",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "logout"
+                ],
+                "operationId": "logout",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LogoutRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/identity/create-admin": {
+            "post": {
+                "tags": [
+                    "identity"
+                ],
+                "operationId": "createAdminUser",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateAdminUserRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/gdn/{assignment-id}": {
+            "post": {
+                "tags": [
+                    "gdn"
+                ],
+                "operationId": "generateGdn",
+                "parameters": [
+                    {
+                        "name": "assignment-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateGdnRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IdResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/drivers/create": {
+            "post": {
+                "tags": [
+                    "drivers"
+                ],
+                "operationId": "createDriverProfile",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateDriverProfileRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/driver-negotiations/send-initial-offers": {
+            "post": {
+                "tags": [
+                    "driver-negotiations"
+                ],
+                "operationId": "sendInitialDriverOffers",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AdminInitialDriverOfferRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/driver-negotiations/dirver-counter": {
+            "post": {
+                "tags": [
+                    "driver-negotiations"
+                ],
+                "operationId": "driverCounter",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DriverCounterRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/driver-negotiations/admin-counter": {
+            "post": {
+                "tags": [
+                    "driver-negotiations"
+                ],
+                "operationId": "adminCounter",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AdminCounterRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/consignors/create": {
+            "post": {
+                "tags": [
+                    "consignors"
+                ],
+                "operationId": "createConsignorProfile",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateConsignorProfileRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "operationId": "changePassword",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChangePasswordRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/reset-password": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "operationId": "resetPassword",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResetPasswordRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "operationId": "register",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RegisterResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/refresh": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "operationId": "refresh",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RefreshRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthTokens"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/otp/verify": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "operationId": "verify",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VerifyOtpRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthTokens"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/otp/send": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "operationId": "sendOtp",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OtpRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "operationId": "login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthenticationRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthTokens"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/forget-password": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "operationId": "forgetPassword",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ForgetPasswordRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/assignments/select-driver": {
+            "post": {
+                "tags": [
+                    "assignments"
+                ],
+                "operationId": "selectDriver",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AdminDriverSelectRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IdResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/vehicles": {
+            "get": {
+                "tags": [
+                    "vehicles"
+                ],
+                "operationId": "getAllVehicles",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/VehicleProfileView"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/vehicles/profile/{driver-id}": {
+            "get": {
+                "tags": [
+                    "vehicles"
+                ],
+                "operationId": "getVehicleByDriver",
+                "parameters": [
+                    {
+                        "name": "driver-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/VehicleProfileView"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tracking/{assignment-id}": {
+            "get": {
+                "tags": [
+                    "tracking"
+                ],
+                "operationId": "getRoute",
+                "parameters": [
+                    {
+                        "name": "assignment-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TrackingResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tracking/{assignment-id}/latest": {
+            "get": {
+                "tags": [
+                    "tracking"
+                ],
+                "operationId": "getLatest",
+                "parameters": [
+                    {
+                        "name": "assignment-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TrackingResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shipments/stage/{stage}": {
+            "get": {
+                "tags": [
+                    "shipments"
+                ],
+                "operationId": "getPageOfShipmentsByStage",
+                "parameters": [
+                    {
+                        "name": "stage",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "NEW",
+                                "AGREED",
+                                "EXECUTION",
+                                "COMPLETED",
+                                "CANCELLED"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResponseShipmentSummary"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shipments/consignor": {
+            "get": {
+                "tags": [
+                    "shipments"
+                ],
+                "operationId": "getConsignorShipments",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ShipmentResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shipment-status-history/{shipment-id}": {
+            "get": {
+                "tags": [
+                    "shipment-status-history"
+                ],
+                "operationId": "getShipmentStatusHistory",
+                "parameters": [
+                    {
+                        "name": "shipment-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ShipmentStatusHistoryDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shipment-offers/{shipment-id}": {
+            "get": {
+                "tags": [
+                    "shipment-offer-controller"
+                ],
+                "operationId": "getShipmentOffers",
+                "parameters": [
+                    {
+                        "name": "shipment-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ShipmentOfferDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/notifications/unread-count": {
+            "get": {
+                "tags": [
+                    "notifications"
+                ],
+                "operationId": "unreadCount",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/notifications/unread-by-type": {
+            "get": {
+                "tags": [
+                    "notifications"
+                ],
+                "operationId": "unreadByType",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UnreadCountResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/notifications/latest": {
+            "get": {
+                "tags": [
+                    "notifications"
+                ],
+                "operationId": "latest",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/NotificationResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/identity/{phone}": {
+            "get": {
+                "tags": [
+                    "identity"
+                ],
+                "operationId": "getUserByPhone",
+                "parameters": [
+                    {
+                        "name": "phone",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserProfile"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/identity/registered-users": {
+            "get": {
+                "tags": [
+                    "identity"
+                ],
+                "operationId": "getPageOfRegisteredUsers",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResponseRegisteredUsers"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/identity/admins": {
+            "get": {
+                "tags": [
+                    "identity"
+                ],
+                "operationId": "getPageOfAdmins",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResponseUserProfile"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/drivers/{phone}": {
+            "get": {
+                "tags": [
+                    "drivers"
+                ],
+                "operationId": "getDriverByPhone",
+                "parameters": [
+                    {
+                        "name": "phone",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DriverProfileView"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/drivers/all": {
+            "get": {
+                "tags": [
+                    "drivers"
+                ],
+                "operationId": "getPageOfDrivers",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResponseDriverProfileView"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/driver-negotiations/{shipment-id}": {
+            "get": {
+                "tags": [
+                    "driver-negotiations"
+                ],
+                "operationId": "getDriverNegotiations",
+                "parameters": [
+                    {
+                        "name": "shipment-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DriverNegotiationResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/driver-negotiations/driver-offers": {
+            "get": {
+                "tags": [
+                    "driver-negotiations"
+                ],
+                "operationId": "getDriverOffers",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DriverOfferView"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/consignors/{phone}": {
+            "get": {
+                "tags": [
+                    "consignors"
+                ],
+                "operationId": "getConsignorByPhone",
+                "parameters": [
+                    {
+                        "name": "phone",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConsignorProfileView"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/consignors/all": {
+            "get": {
+                "tags": [
+                    "consignors"
+                ],
+                "operationId": "getPageOfConsignors",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResponseConsignorProfileView"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/assignments/{shipment-id}": {
+            "get": {
+                "tags": [
+                    "assignments"
+                ],
+                "operationId": "getAssignmentsByShipmentId",
+                "parameters": [
+                    {
+                        "name": "shipment-id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AssignmentAdminView"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/assignments/driver": {
+            "get": {
+                "tags": [
+                    "assignments"
+                ],
+                "operationId": "getAssignmentsOfDriver",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AssignmentDriverView"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "UserProfile": {
+                "type": "object",
+                "properties": {
+                    "publicId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "nationalId": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "firstName": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "lastName": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "profilePic": {
+                        "type": "string"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "SUPER_ADMIN",
+                                "ADMIN",
+                                "DRIVER",
+                                "CONSIGNOR"
+                            ]
+                        },
+                        "uniqueItems": true
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "OTP_SENT",
+                            "VERIFIED",
+                            "PENDING",
+                            "APPROVED",
+                            "ACTIVE",
+                            "DISABLED",
+                            "SUSPENDED",
+                            "REJECTED"
+                        ]
+                    },
+                    "phoneVerified": {
+                        "type": "boolean"
+                    },
+                    "remark": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "required": [
+                    "firstName",
+                    "lastName",
+                    "phone",
+                    "publicId",
+                    "roles",
+                    "status"
+                ]
+            },
+            "TextDto": {
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": [
+                    "text"
+                ]
+            },
+            "RejectOrCancelRequest": {
+                "type": "object",
+                "properties": {
+                    "negotiationId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "reason": {
+                        "type": "string"
+                    }
+                }
+            },
+            "DriverAcceptRequest": {
+                "type": "object",
+                "properties": {
+                    "negotiationId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "lat": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "lon": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "locationText": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AssignmentRequest": {
+                "type": "object",
+                "properties": {
+                    "assignmentId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "remark": {
+                        "type": "string"
+                    }
+                }
+            },
+            "CreateVehicleRequest": {
+                "type": "object",
+                "properties": {
+                    "plateNumber": {
+                        "type": "string"
+                    },
+                    "insuranceDoc": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "details": {
+                        "type": "string"
+                    },
+                    "photo": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TrackingRecordRequest": {
+                "type": "object",
+                "properties": {
+                    "assignmentId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "latitude": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "longitude": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "accuracy": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "speed": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "recordedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "CreateShipmentRequest": {
+                "type": "object",
+                "properties": {
+                    "goodType": {
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "weight": {
+                        "type": "string"
+                    },
+                    "volume": {
+                        "type": "string"
+                    },
+                    "loadingLocation": {
+                        "type": "string"
+                    },
+                    "offloadingLocation": {
+                        "type": "string"
+                    },
+                    "route": {
+                        "type": "string"
+                    },
+                    "requiredVehicleType": {
+                        "type": "string"
+                    },
+                    "requiredVehicleNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "loadingDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deliveryDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "details": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "number"
+                    },
+                    "priceType": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ConsignorRequest": {
+                "type": "object",
+                "properties": {
+                    "shipmentId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "reason": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ConsignorCounterReq": {
+                "type": "object",
+                "properties": {
+                    "shipmentId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "counterPrice": {
+                        "type": "number"
+                    },
+                    "requiredVehicleType": {
+                        "type": "string"
+                    },
+                    "requiredVehicleNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "loadingDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deliveryDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "reason": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AdminRequestChange": {
+                "type": "object",
+                "properties": {
+                    "shipmentId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "priceAmount": {
+                        "type": "number"
+                    },
+                    "requiredVehicleNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "requiredVehicleType": {
+                        "type": "string"
+                    },
+                    "loadingDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deliveryDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "reason": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AdminRequest": {
+                "type": "object",
+                "properties": {
+                    "shipmentId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "reason": {
+                        "type": "string"
+                    }
+                }
+            },
+            "LogoutRequest": {
+                "type": "object",
+                "properties": {
+                    "refreshToken": {
+                        "type": "string"
+                    }
+                }
+            },
+            "CreateAdminUserRequest": {
+                "type": "object",
+                "properties": {
+                    "phone": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "remark": {
+                        "type": "string"
+                    }
+                }
+            },
+            "CreateGdnRequest": {
+                "type": "object",
+                "properties": {
+                    "consigneeName": {
+                        "type": "string"
+                    },
+                    "consigneeContact": {
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "weight": {
+                        "type": "string"
+                    },
+                    "volume": {
+                        "type": "string"
+                    },
+                    "packagingType": {
+                        "type": "string"
+                    },
+                    "remarks": {
+                        "type": "string"
+                    }
+                }
+            },
+            "IdResponse": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                }
+            },
+            "CreateDriverProfileRequest": {
+                "type": "object",
+                "properties": {
+                    "profilePic": {
+                        "type": "string"
+                    },
+                    "nationalId": {
+                        "type": "string"
+                    },
+                    "licenceNumber": {
+                        "type": "string"
+                    },
+                    "licenceDocument": {
+                        "type": "string"
+                    },
+                    "preferredLanes": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AdminInitialDriverOfferRequest": {
+                "type": "object",
+                "properties": {
+                    "shipmentId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "driverIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    "offeredPrice": {
+                        "type": "number"
+                    },
+                    "remark": {
+                        "type": "string"
+                    }
+                }
+            },
+            "DriverCounterRequest": {
+                "type": "object",
+                "properties": {
+                    "negotiationId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "counterPrice": {
+                        "type": "number"
+                    },
+                    "reason": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AdminCounterRequest": {
+                "type": "object",
+                "properties": {
+                    "shipmentId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "driverIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    "offeredPrice": {
+                        "type": "number"
+                    },
+                    "remark": {
+                        "type": "string"
+                    }
+                }
+            },
+            "CreateConsignorProfileRequest": {
+                "type": "object",
+                "properties": {
+                    "businessName": {
+                        "type": "string"
+                    },
+                    "tradeLicence": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ChangePasswordRequest": {
+                "type": "object",
+                "properties": {
+                    "phone": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "currentPassword": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "newPassword": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "confirmPassword": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": [
+                    "confirmPassword",
+                    "currentPassword",
+                    "newPassword",
+                    "phone"
+                ]
+            },
+            "ResetPasswordRequest": {
+                "type": "object",
+                "properties": {
+                    "phone": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "otpCode": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "newPassword": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "confirmPassword": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": [
+                    "confirmPassword",
+                    "newPassword",
+                    "otpCode",
+                    "phone"
+                ]
+            },
+            "RegisterRequest": {
+                "type": "object",
+                "properties": {
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "SUPER_ADMIN",
+                            "ADMIN",
+                            "DRIVER",
+                            "CONSIGNOR"
+                        ]
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "confirmPassword": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RegisterResponse": {
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "phone": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RefreshRequest": {
+                "type": "object",
+                "properties": {
+                    "refreshToken": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AuthTokens": {
+                "type": "object",
+                "properties": {
+                    "accessToken": {
+                        "type": "string"
+                    },
+                    "refreshToken": {
+                        "type": "string"
+                    },
+                    "isTempPassword": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "VerifyOtpRequest": {
+                "type": "object",
+                "properties": {
+                    "phone": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "code": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": [
+                    "code",
+                    "phone"
+                ]
+            },
+            "OtpRequest": {
+                "type": "object",
+                "properties": {
+                    "phone": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AuthenticationRequest": {
+                "type": "object",
+                "properties": {
+                    "phone": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "password": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": [
+                    "password",
+                    "phone"
+                ]
+            },
+            "ForgetPasswordRequest": {
+                "type": "object",
+                "properties": {
+                    "phone": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": [
+                    "phone"
+                ]
+            },
+            "AdminDriverSelectRequest": {
+                "type": "object",
+                "properties": {
+                    "negotiationId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "remark": {
+                        "type": "string"
+                    }
+                }
+            },
+            "VehicleProfileView": {
+                "type": "object",
+                "properties": {
+                    "phone": {
+                        "type": "string"
+                    },
+                    "publicId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "plateNumber": {
+                        "type": "string"
+                    },
+                    "details": {
+                        "type": "string"
+                    },
+                    "insuranceDoc": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "photo": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TrackingResponse": {
+                "type": "object",
+                "properties": {
+                    "latitude": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "longitude": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "accuracy": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "speed": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "recordedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "PageResponseShipmentSummary": {
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ShipmentSummary"
+                        }
+                    },
+                    "number": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "ShipmentSummary": {
+                "type": "object",
+                "properties": {
+                    "publicId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "goodType": {
+                        "type": "string"
+                    },
+                    "loadingLocation": {
+                        "type": "string"
+                    },
+                    "offloadingLocation": {
+                        "type": "string"
+                    },
+                    "priceAmount": {
+                        "type": "number"
+                    },
+                    "priceCurrency": {
+                        "type": "string"
+                    },
+                    "requiredVehicleType": {
+                        "type": "string"
+                    },
+                    "requiredVehicleNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "loadingDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "currentStatus": {
+                        "type": "string",
+                        "enum": [
+                            "CREATED",
+                            "ADMIN_REQUESTED_CHANGE",
+                            "CONSIGNOR_COUNTERED",
+                            "ADMIN_REJECTED_OFFER",
+                            "CONSIGNOR_REJECTED_OFFER",
+                            "CONSIGNOR_ACCEPTED",
+                            "ADMIN_APPROVED",
+                            "DRIVER_ASSIGNED",
+                            "IN_TRANSIT",
+                            "COMPLETED",
+                            "CANCELLED_BY_CONSIGNOR",
+                            "CANCELLED_BY_ADMIN",
+                            "CANCELLED_SYSTEM"
+                        ]
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "ShipmentResponse": {
+                "type": "object",
+                "properties": {
+                    "currentStatus": {
+                        "type": "string",
+                        "enum": [
+                            "CREATED",
+                            "ADMIN_REQUESTED_CHANGE",
+                            "CONSIGNOR_COUNTERED",
+                            "ADMIN_REJECTED_OFFER",
+                            "CONSIGNOR_REJECTED_OFFER",
+                            "CONSIGNOR_ACCEPTED",
+                            "ADMIN_APPROVED",
+                            "DRIVER_ASSIGNED",
+                            "IN_TRANSIT",
+                            "COMPLETED",
+                            "CANCELLED_BY_CONSIGNOR",
+                            "CANCELLED_BY_ADMIN",
+                            "CANCELLED_SYSTEM"
+                        ]
+                    },
+                    "consignorId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "publicId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "priceAmount": {
+                        "type": "number"
+                    },
+                    "priceType": {
+                        "type": "string"
+                    },
+                    "goodType": {
+                        "type": "string"
+                    },
+                    "weight": {
+                        "type": "string"
+                    },
+                    "volume": {
+                        "type": "string"
+                    },
+                    "loadingLocation": {
+                        "type": "string"
+                    },
+                    "offloadingLocation": {
+                        "type": "string"
+                    },
+                    "route": {
+                        "type": "string"
+                    },
+                    "requiredVehicleType": {
+                        "type": "string"
+                    },
+                    "requiredVehicleNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "loadingDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deliveryDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "details": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ShipmentStatusHistoryDto": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string"
+                    },
+                    "reason": {
+                        "type": "string"
+                    },
+                    "changedBy": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "changedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "ShipmentOfferDto": {
+                "type": "object",
+                "properties": {
+                    "round": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "priceAmount": {
+                        "type": "number"
+                    },
+                    "requiredVehicleType": {
+                        "type": "string"
+                    },
+                    "requiredVehicleNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "loadingDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deliveryDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "reason": {
+                        "type": "string"
+                    },
+                    "offeredBy": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "offeredAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "UnreadCountResponse": {},
+            "NotificationResponse": {},
+            "PageResponseRegisteredUsers": {
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RegisteredUsers"
+                        }
+                    },
+                    "number": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "RegisteredUsers": {
+                "type": "object",
+                "properties": {
+                    "publicId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "SUPER_ADMIN",
+                                "ADMIN",
+                                "DRIVER",
+                                "CONSIGNOR"
+                            ]
+                        },
+                        "uniqueItems": true
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "OTP_SENT",
+                            "VERIFIED",
+                            "PENDING",
+                            "APPROVED",
+                            "ACTIVE",
+                            "DISABLED",
+                            "SUSPENDED",
+                            "REJECTED"
+                        ]
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "PageResponseUserProfile": {
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserProfile"
+                        }
+                    },
+                    "number": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "DriverProfileView": {
+                "type": "object",
+                "properties": {
+                    "phone": {
+                        "type": "string"
+                    },
+                    "publicId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "profilePic": {
+                        "type": "string"
+                    },
+                    "nationalId": {
+                        "type": "string"
+                    },
+                    "licenceNumber": {
+                        "type": "string"
+                    },
+                    "licenceDocument": {
+                        "type": "string"
+                    },
+                    "preferredLanes": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "remark": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "PageResponseDriverProfileView": {
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DriverProfileView"
+                        }
+                    },
+                    "number": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "DriverNegotiationResponse": {
+                "type": "object",
+                "properties": {
+                    "publicId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "shipmentId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "driverId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "CREATED",
+                            "OFFER_SENT",
+                            "DRIVER_COUNTERED",
+                            "ADMIN_COUNTERED",
+                            "DRIVER_ACCEPTS",
+                            "DRIVER_REJECTS",
+                            "EXPIRED",
+                            "SELECTED",
+                            "NOT_SELECTED",
+                            "DRIVER_CANCEL",
+                            "CANCELED"
+                        ]
+                    },
+                    "finalAgreedPrice": {
+                        "type": "number"
+                    },
+                    "startLocation": {
+                        "type": "string"
+                    },
+                    "startLatitude": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "startLongitude": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "DriverOfferView": {
+                "type": "object",
+                "properties": {
+                    "negotiationId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "loadingLocation": {
+                        "type": "string"
+                    },
+                    "offloadingLocation": {
+                        "type": "string"
+                    },
+                    "goodType": {
+                        "type": "string"
+                    },
+                    "weight": {
+                        "type": "string"
+                    },
+                    "volume": {
+                        "type": "string"
+                    },
+                    "requiredVehicleType": {
+                        "type": "string"
+                    },
+                    "requiredVehicleNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "priceAmount": {
+                        "type": "number"
+                    },
+                    "priceType": {
+                        "type": "string"
+                    },
+                    "priceCurrency": {
+                        "type": "string"
+                    },
+                    "details": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ConsignorProfileView": {
+                "type": "object",
+                "properties": {
+                    "phone": {
+                        "type": "string"
+                    },
+                    "publicId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "businessName": {
+                        "type": "string"
+                    },
+                    "tradeLicence": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "remark": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "PageResponseConsignorProfileView": {
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ConsignorProfileView"
+                        }
+                    },
+                    "number": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "AssignmentAdminView": {
+                "type": "object",
+                "properties": {
+                    "publicId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "shipmentId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "driverId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "agreedPrice": {
+                        "type": "number"
+                    },
+                    "startLocation": {
+                        "type": "string"
+                    },
+                    "startLatitude": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "startLongitude": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "DRIVER_ASSIGNED",
+                            "GDN_GENERATED",
+                            "LOADING_CONFIRMED",
+                            "IN_TRANSIT",
+                            "DELIVERED",
+                            "OFFLOADING_CONFIRMED",
+                            "GRN_GENERATED",
+                            "CONSIGNOR_CONFIRMED",
+                            "CANCELLED",
+                            "REOPENED_BY_ADMIN"
+                        ]
+                    },
+                    "assignedBy": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "assignedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "driverStartedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "startedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "driverCompletedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "completedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "consignorConfirmedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "cancelledAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "cancelReason": {
+                        "type": "string"
+                    },
+                    "remark": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AssignmentDriverView": {
+                "type": "object",
+                "properties": {
+                    "publicId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "shipmentId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "agreedPrice": {
+                        "type": "number"
+                    },
+                    "assignedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "driverStartedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "startedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "driverCompletedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "completedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "consignorConfirmedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "cancelledAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "cancelReason": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

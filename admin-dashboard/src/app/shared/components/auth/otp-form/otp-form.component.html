@@ -1,0 +1,48 @@
+<div class="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
+  <div>
+    <div class="mb-5 sm:mb-8">
+      <h1 class="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
+        Verify your phone
+      </h1>
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        We've sent a 6-digit code to <span class="font-medium text-gray-800 dark:text-white">{{ maskedPhone }}</span>
+      </p>
+    </div>
+
+    <form (ngSubmit)="onVerify()" class="space-y-6">
+      <div class="flex flex-col space-y-2">
+        <app-label>Verification Code <span class="text-error-500">*</span></app-label>
+        
+        <div class="flex justify-between gap-2 sm:gap-4" (paste)="onPaste($event)">
+          @for (i of [0,1,2,3,4,5]; track i) {
+            <input
+              #otpInput
+              type="text"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              maxlength="1"
+              class="w-12 h-12 text-center text-xl font-bold border rounded-lg bg-transparent border-gray-300 dark:border-gray-700 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none transition-all dark:text-white"
+              (input)="onOtpInput($event, i)"
+              (keydown.backspace)="onOtpDelete($event, i)"
+            />
+          }
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <app-button className="w-full" size="sm" (btnClick)="onVerify()">
+          Verify Code
+        </app-button>
+
+        <div class="text-center">
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            Didn't receive the code? 
+            <button type="button" (click)="onResend()" class="font-medium text-brand-500 hover:text-brand-600 dark:text-brand-400 transition-colors">
+              Resend
+            </button>
+          </p>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
